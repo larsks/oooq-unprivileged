@@ -1,0 +1,7 @@
+- hosts: localhost
+  roles:
+    - libvirt/setup
+
+- hosts: undercloud
+  roles:
+    - tripleo

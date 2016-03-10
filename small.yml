@@ -1,0 +1,21 @@
+default_disk: 40
+
+undercloud_memory: 10000
+
+control_memory: 6000
+compute_memory: 2048
+
+overcloud_nodes:
+  - name: control_0
+    flavor: control
+  - name: compute_0
+    flavor: compute
+
+networks:
+  - name: external
+    bridge: virbr0
+    address: 192.168.122.1
+    netmask: 255.255.255.0
+
+  - name: overcloud
+    bridge: virbr1
