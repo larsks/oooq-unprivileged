@@ -1,9 +1,7 @@
-default_disk: 40
-
-undercloud_memory: 10000
+undercloud_memory: 8000
 
 control_memory: 6000
-compute_memory: 2048
+compute_memory: 2000
 
 overcloud_nodes:
   - name: control_0
@@ -13,9 +11,9 @@ overcloud_nodes:
 
 networks:
   - name: external
-    bridge: virbr0
-    address: 192.168.122.1
+    bridge: brext
+    address: 192.168.23.1
     netmask: 255.255.255.0
 
   - name: overcloud
-    bridge: virbr1
+    bridge: brovc

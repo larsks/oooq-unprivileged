@@ -54,3 +54,50 @@ on your system) and add:
     allow brext
     allow brovc
 
+## Run the playbooks
+
+Now, as a non-root user, you can place the following in
+`playbook.yml`:
+
+    - hosts: localhost
+      roles:
+        - libvirt/setup
+
+    - hosts: undercloud
+      roles:
+        - tripleo
+
+And the following in `config.yml` (these values must, of course,
+match the libvirt networks we created earlier, so if you're using the
+libvirt `default` network you will need different values here):
+
+    networks:
+      - name: external
+        bridge: brext
+        address: 192.168.23.1
+        netmask: 255.255.255.0
+
+      - name: overcloud
+        bridge: brovc
+
+And run it like this:
+
+    ansible-playbook playbook.yml -e @config.yml
+
+This will set up the default environment, which requires at least 32GB
+of RAM.  If you want to deploy a smaller environment, consider adding
+the following to your `config.yml`:
+
+    undercloud_memory: 8000
+
+    control_memory: 6000
+    compute_memory: 2000
+
+    overcloud_nodes:
+      - name: control_0
+        flavor: control
+      - name: compute_0
+        flavor: compute
+
+This will deploy a single controller and a single compute node, and
+requires around 16GB of memory.
